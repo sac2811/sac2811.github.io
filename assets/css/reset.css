@@ -1,0 +1,450 @@
+/* =====================================================
+   DEVCRAFT PREMIUM PORTFOLIO
+   Global CSS Reset
+   ===================================================== */
+
+
+
+
+
+/* ===============================
+   Universal Reset
+   =============================== */
+
+
+*,
+*::before,
+*::after {
+
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   HTML Base
+   =============================== */
+
+
+html {
+
+
+    scroll-behavior: smooth;
+
+    font-size: 16px;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Body
+   =============================== */
+
+
+body {
+
+
+    min-height: 100vh;
+
+    font-family:
+        var(--font-primary);
+
+
+    background:
+        var(--bg-primary);
+
+
+    color:
+        var(--text-primary);
+
+
+    line-height:
+        1.6;
+
+
+    overflow-x:
+        hidden;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Headings
+   =============================== */
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+
+    font-family:
+        var(--font-heading);
+
+
+    font-weight:
+        700;
+
+
+    line-height:
+        1.2;
+
+
+    color:
+        var(--text-primary);
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Paragraphs
+   =============================== */
+
+
+p {
+
+
+    color:
+        var(--text-secondary);
+
+
+    line-height:
+        1.8;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Links
+   =============================== */
+
+
+a {
+
+
+    color:
+        inherit;
+
+
+    text-decoration:
+        none;
+
+
+    transition:
+        var(--transition-fast);
+
+
+}
+
+
+
+
+
+
+
+
+a:hover {
+
+
+    color:
+        var(--secondary-color);
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Lists
+   =============================== */
+
+
+ul,
+ol {
+
+
+    list-style:
+        none;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Images
+   =============================== */
+
+
+img {
+
+
+    max-width:
+        100%;
+
+
+    height:
+        auto;
+
+
+    display:
+        block;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Buttons
+   =============================== */
+
+
+button {
+
+
+    border:
+        none;
+
+
+    outline:
+        none;
+
+
+    background:
+        none;
+
+
+    cursor:
+        pointer;
+
+
+    font-family:
+        inherit;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Forms
+   =============================== */
+
+
+input,
+textarea,
+select {
+
+
+    font-family:
+        inherit;
+
+
+    font-size:
+        inherit;
+
+
+}
+
+
+
+
+
+
+
+
+textarea {
+
+
+    resize:
+        vertical;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Sections
+   =============================== */
+
+
+section {
+
+
+    position:
+        relative;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Selection
+   =============================== */
+
+
+::selection {
+
+
+    background:
+        var(--primary-color);
+
+
+    color:
+        white;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Scrollbar
+   =============================== */
+
+
+::-webkit-scrollbar {
+
+
+    width:
+        10px;
+
+
+}
+
+
+
+
+
+::-webkit-scrollbar-track {
+
+
+    background:
+        var(--bg-secondary);
+
+
+}
+
+
+
+
+
+::-webkit-scrollbar-thumb {
+
+
+    background:
+        var(--primary-color);
+
+
+    border-radius:
+        20px;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   Disabled Elements
+   =============================== */
+
+
+button:disabled,
+input:disabled {
+
+
+    cursor:
+        not-allowed;
+
+
+    opacity:
+        .6;
+
+
+}

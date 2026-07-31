@@ -1,714 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP & WordPress Developer Portfolio</title>
-    <!-- Link to your external stylesheet -->
-    <style>
-        /* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    scroll-behavior: smooth;
-}
-
-:root {
-    --bg-dark: #0f172a;
-    --bg-card: #1e293b;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --primary: #38bdf8;
-    --secondary: #818cf8;
-    --php-blue: #4f5b93;
-    --wp-blue: #21759b;
-}
-
-body {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* Navigation */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(15, 23, 42, 0.9);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.05rem 2rem;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-decoration: none;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-.nav-link:hover {
-    color: var(--primary);
-}
-
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    background: none;
-    border: none;
-}
-
-.menu-toggle span {
-    width: 25px;
-    height: 3px;
-    background-color: var(--text-main);
-    border-radius: 2px;
-    transition: 0.3s;
-}
-
-/* Section Global Layout */
-section {
-    padding: 8rem 2rem 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.section-title {
-    font-size: 2.25rem;
-    margin-bottom: 3rem;
-    text-align: center;
-    position: relative;
-}
-
-.section-title::after {
-    content: '';
-    display: block;
-    width: 50px;
-    height: 4px;
-    background: var(--primary);
-    margin: 0.5rem auto 0 auto;
-    border-radius: 2px;
-}
-
-/* Hero Section */
-#hero {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 100vh;
-    gap: 4rem;
-    padding-top: 4rem;
-}
-
-.hero-content {
-    flex: 1;
-}
-
-.hero-subtitle {
-    color: var(--primary);
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-}
-
-.hero-description {
-    color: var(--text-muted);
-    font-size: 1.15rem;
-    margin-bottom: 2.5rem;
-    max-width: 540px;
-}
-
-.cta-container {
-    display: flex;
-    gap: 1rem;
-}
-
-.btn {
-    display: inline-block;
-    padding: 0.8rem 1.8rem;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.2s, background-color 0.2s;
-    cursor: pointer;
-}
-
-.btn:active {
-    transform: scale(0.98);
-}
-
-.btn-primary {
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    color: var(--bg-dark);
-}
-
-.btn-primary:hover {
-    opacity: 0.9;
-}
-
-.btn-secondary {
-    border: 2px solid var(--text-muted);
-    color: var(--text-main);
-}
-
-.btn-secondary:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.hero-visual {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.hero-blob {
-    width: 400px;
-    height: 400px;
-    background: linear-gradient(45deg, var(--php-blue), var(--wp-blue));
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    position: absolute;
-    opacity: 0.2;
-    animation: morph 8s ease-in-out infinite alternate;
-    z-index: 1;
-}
-
-.hero-image-wrapper {
-    position: relative;
-    z-index: 2;
-    background: var(--bg-card);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.code-snippet {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.9rem;
-}
-
-/* Pseudo-syntax Highlighting */
-.code-php { color: #f87171; }
-.code-keyword { color: #fcd34d; }
-.code-class { color: #60a5fa; }
-.code-function { color: #34d399; }
-.code-string { color: #a78bfa; }
-
-/* Skills Section */
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-}
-
-.skill-card {
-    background-color: var(--bg-card);
-    padding: 2.5rem 2rem;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.3s, border-color 0.3s;
-}
-
-.skill-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-}
-
-.skill-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: block;
-}
-
-.skill-card h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
-}
-
-.skill-card p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-/* Projects Section */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
-}
-
-.project-card {
-    background-color: var(--bg-card);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    flex-direction: column;
-}
-
-.project-image-placeholder {
-    width: 100%;
-    height: 200px;
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.1));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.project-image-placeholder::before {
-    content: "</>";
-    font-family: monospace;
-    font-size: 3rem;
-    color: rgba(255, 255, 255, 0.15);
-    font-weight: bold;
-}
-
-.project-content {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.project-tags {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-.tag {
-    background-color: rgba(56, 189, 248, 0.1);
-    color: var(--primary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.project-title {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.project-description {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-    flex-grow: 1;
-}
-
-.project-link {
-    color: var(--secondary);
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: color 0.2s;
-}
-
-.project-link:hover {
-    color: var(--primary);
-}
-
-/* Contact Section */
-.contact-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: var(--bg-card);
-    padding: 3rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.form-control {
-    width: 100%;
-    padding: 0.85rem 1rem;
-    background-color: var(--bg-dark);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: var(--text-main);
-    font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
-}
-
-textarea.form-control {
-    resize: vertical;
-    min-height: 120px;
-}
-
-.btn-submit {
-    width: 100%;
-    border: none;
-    font-size: 1rem;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 3rem 2rem;
-    color: var(--text-muted);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    margin-top: 4rem;
-    font-size: 0.95rem;
-}
-
-/* Animations */
-@keyframes morph {
-    0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-    50% { border-radius: 45% 55% 50% 50% / 50% 55% 45% 55%; }
-    100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-}
-
-/* Responsive Breakpoints */
-@media (max-width: 992px) {
-    #hero {
-        flex-direction: column;
-        text-align: center;
-        justify-content: center;
-        gap: 3rem;
-        padding-top: 8rem;
-    }
-
-    .hero-description {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .cta-container {
-        justify-content: center;
-    }
-
-    .hero-visual {
-        order: -1;
-    }
-
-    .hero-blob {
-        width: 320px;
-        height: 320px;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    .section-title {
-        font-size: 1.8rem;
-    }
-
-    .menu-toggle {
-        display: flex;
-        z-index: 1001;
-    }
-
-    .nav-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 75%;
-        height: 100vh;
-        background-color: var(--bg-card);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2.5rem;
-        transition: 0.4s ease;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-        z-index: 1000;
-    }
-
-    .nav-menu.active {
-        right: 0;
-    }
-
-    .menu-toggle.active span:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-    .menu-toggle.active span:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-
-    .contact-container {
-        padding: 2rem 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .cta-container {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    .hero-blob {
-        width: 260px;
-        height: 260px;
-    }
-}
-
-    </style>
+
+
+<meta charset="UTF-8">
+
+
+<meta name="viewport" 
+content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+
+
+<meta name="theme-color"
+      content="#020617">
+	  
+<!-- Open Graph -->
+
+<meta property="og:title"
+content="PHP & WordPress Developer | DevCraft">
+
+
+<meta property="og:description"
+content="Custom WordPress websites, WooCommerce solutions, PHP applications and enterprise web development.">
+
+
+<meta property="og:type"
+content="website">
+
+
+<meta property="og:image"
+content="assets/images/hero/developer-workspace.webp">
+
+
+<!-- Twitter Card -->
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+
+<meta name="twitter:title"
+content="PHP & WordPress Developer Portfolio">
+
+
+<meta name="twitter:description"
+content="Professional web development portfolio showcasing WordPress and PHP solutions.">
+
+
+<meta name="twitter:image"
+content="assets/images/hero/developer-workspace.webp">
+
+<title>
+DevCraft | PHP & WordPress Developer
+</title>
+
+
+
+<meta 
+name="description"
+content="
+Professional PHP and WordPress Developer
+creating modern websites, WooCommerce stores
+and custom web applications.
+">
+
+
+
+<meta 
+name="keywords"
+content="
+PHP Developer,
+WordPress Developer,
+WooCommerce,
+Laravel,
+Web Development
+">
+
+
+
+<meta 
+name="author"
+content="DevCraft">
+
+
+
+
+
+
+
+<!-- Favicon -->
+
+
+<link 
+rel="icon"
+href="assets/images/favicon.png">
+
+
+
+
+
+
+
+<!-- Google Fonts -->
+
+
+<link 
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+
+
+
+
+
+<!-- Font Awesome -->
+
+
+<link 
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+
+
+
+
+
+<!-- Main Styles -->
+
+
+<link 
+rel="stylesheet"
+href="assets/css/style.css">
+
+
+
+<link 
+rel="stylesheet"
+href="assets/css/components.css">
+
+
+
+<link 
+rel="stylesheet"
+href="assets/css/responsive.css">
+
+
+
+
+
 </head>
+
+
+
+
+
+
+
+
+
 <body>
 
-    <header>
-        <nav class="nav-container">
-            <a href="#" class="logo">&lt;Dev.Craft /&gt;</a>
-            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="nav-links">
-                <li><a href="#hero" class="nav-link">Home</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Work</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero">
-            <div class="hero-content">
-                <p class="hero-subtitle">Backend & CMS Specialist</p>
-                <h1 class="hero-title">Building Scalable Web Apps & Custom WordPress Wonders</h1>
-                <p class="hero-description">Hi, I'm a professional PHP and WordPress developer. I craft fast, secure, and clean programmatic solutions tailored to client specifications.</p>
-                <div class="cta-container">
-                    <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="hero-blob"></div>
-                <div class="hero-image-wrapper">
-                    <pre class="code-snippet"><code><span class="code-php">&lt;?php</span>
-<span class="code-keyword">class</span> <span class="code-class">Developer</span> {
-    <span class="code-keyword">public</span> <span class="code-keyword">function</span> <span class="code-function">build</span>() {
-        <span class="code-keyword">return</span> [
-            <span class="code-string">'PHP_8'</span> => <span class="code-string">'OOP & MVC'</span>,
-            <span class="code-string">'WordPress'</span> => <span class="code-string">'Headless / Custom'</span>
-        ];
-    }
+
+
+
+<!-- Page Loader -->
+
+
+<div 
+id="page-loader">
+
+
+    <div class="loader-circle"></div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Header -->
+
+
+<div 
+data-template="templates/header.html">
+</div>
+
+
+
+
+
+
+
+
+
+<main>
+
+
+
+
+
+<div 
+data-template="templates/hero.html">
+</div>
+
+
+
+<div 
+data-template="templates/about.html">
+</div>
+
+
+
+<div 
+data-template="templates/counters.html">
+</div>
+
+
+
+<div 
+data-template="templates/services.html">
+</div>
+
+
+
+<div 
+data-template="templates/skills.html">
+</div>
+
+
+
+<div 
+data-template="templates/experience.html">
+</div>
+
+
+
+<div 
+data-template="templates/work.html">
+</div>
+
+
+
+<div 
+data-template="templates/portfolio.html">
+</div>
+
+
+
+<div 
+data-template="templates/testimonials.html">
+</div>
+
+
+
+<div 
+data-template="templates/process.html">
+</div>
+
+
+
+<div 
+data-template="templates/faq.html">
+</div>
+
+
+
+<div 
+data-template="templates/contact.html">
+</div>
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+<!-- Footer -->
+
+
+<div 
+data-template="templates/footer.html">
+</div>
+
+
+
+
+
+
+
+
+
+<!-- JavaScript Template Loader -->
+
+
+<script>
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const templates =
+document.querySelectorAll(
+"[data-template]"
+);
+
+
+
+templates.forEach(
+async(element)=>{
+
+
+const file =
+element.getAttribute(
+"data-template"
+);
+
+
+
+try{
+
+
+const response =
+await fetch(file);
+
+
+
+if(response.ok){
+
+
+element.innerHTML =
+await response.text();
+
+
 }
-<span class="code-php">?&gt;</span></code></pre>
-                </div>
-            </div>
-        </section>
+else{
 
-        <!-- Skills Section -->
-        <section id="skills">
-            <h2 class="section-title">Core Architecture Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <span class="skill-icon">🐘</span>
-                    <h3>Modern PHP</h3>
-                    <p>Object-Oriented programming, structural patterns, dependency management via Composer, and MVC architectural patterns.</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🌐</span>
-                    <h3>WordPress Engine</h3>
-                    <p>Custom core themes, decoupled structural setups, plug-in extensions, actions, hooks, and Gutenberg configurations.</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🗄️</span>
-                    <h3>Database Optimization</h3>
-                    <p>MySQL relational schemes, structural querying optimizations, data indexing, and secure structures.</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">⚡</span>
-                    <h3>Rest APIs</h3>
-                    <p>Building secure server endpoints, handling webhook authentications, and integrating external web services efficiently.</p>
-                </div>
-            </div>
-        </section>
 
-        <!-- Projects Section -->
-        <section id="projects">
-            <h2 class="section-title">Featured Ecosystem Builds</h2>
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <div class="project-image-placeholder"></div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">WordPress</span>
-                            <span class="tag">WooCommerce</span>
-                            <span class="tag">PHP</span>
-                        </div>
-                        <h3 class="project-title">Custom Headless eCommerce</h3>
-                        <p class="project-description">A decoupled WooCommerce engine pulling product payloads into an ultrafast React front-end container utilizing REST architectural schemas.</p>
-                        <a href="#" class="project-link">Analyze Build Architecture &rarr;</a>
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <div class="project-image-placeholder"></div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">PHP 8</span>
-                            <span class="tag">Laravel</span>
-                            <span class="tag">MySQL</span>
-                        </div>
-                        <h3 class="project-title">SaaS Subscription Manager</h3>
-                        <p class="project-description">A multi-tenant system executing deep customer metrics reporting, Stripe webhooks billing logic pipelines, and structural query optimizations.</p>
-                        <a href="#" class="project-link">Analyze Build Architecture &rarr;</a>
-                    </div>
-                </div>
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <div class="project-image-placeholder"></div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag">WordPress Plugin</span>
-                            <span class="tag">API Integration</span>
-                        </div>
-                        <h3 class="project-title">CRM Synchronization Layer</h3>
-                        <p class="project-description">Custom engineered ecosystem plugin to hook into core registration states transferring structured data objects to external hubs securely.</p>
-                        <a href="#" class="project-link">Analyze Build Architecture &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+element.innerHTML =
+"<p>Template not found</p>";
 
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2 class="section-title">Initiate a Development Query</h2>
-            <div class="contact-container">
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label class="form-label" for="name">Identity Designation (Name)</label>
-                        <input type="text" id="name" class="form-control" placeholder="e.g. Jane Doe" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="email">Network Target (Email)</label>
-                        <input type="email" id="email" class="form-control" placeholder="e.g. contact@domain.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="message">Project Constraints & Objective Details</label>
-                        <textarea id="message" class="form-control" placeholder="Outline your technical requirements here..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-submit">Submit & Get your work done!</button>
-                </form>
-            </div>
-        </section>
-    </main>
 
-    <footer>
-        <p>&copy; 2026 DevCraft Portfolio.</p>
-    </footer>
+}
 
-    <!-- Link to your external script file -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const navLinks = document.getElementById('nav-links');
-    const menuLinks = document.querySelectorAll('.nav-link');
-    const contactForm = document.getElementById('contact-form');
 
-    // Toggle mobile drawer visibility state
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenuBtn.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
+}
+catch(error){
 
-    // Close drawer instantly upon anchor interaction selection
-    menuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenuBtn.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
-    });
 
-    // Intercept form submission
-    contactForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
-        // Log the structural capture simulation
-        console.log('Ecosystem registration simulated.');
-        alert('Message successfully simulated!');
-        
-        // Clear input architecture
-        contactForm.reset();
-    });
+console.error(
+"Template loading error:",
+file,
+error
+);
+
+
+}
+
+
+
 });
 
-    </script>
+
+});
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+<!-- Scripts -->
+
+
+<script src="assets/js/main.js"></script>
+
+
+<script src="assets/js/animations.js"></script>
+
+
+<script src="assets/js/counter.js"></script>
+
+
+<script src="assets/js/faq.js"></script>
+
+<script src="assets/js/portfolio.js"></script>
+
+<script src="assets/js/app.js"></script>
+
+<script src="assets/js/theme.js"></script>
+
+<script src="assets/js/contact.js"></script>
+
+<script src="assets/js/lazyload.js"></script>
+
 </body>
+
+
 </html>

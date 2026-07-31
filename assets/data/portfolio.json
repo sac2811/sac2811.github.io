@@ -1,0 +1,92 @@
+[
+    {
+        "title":
+        "Corporate WordPress Business Portal",
+
+        "category":
+        "WordPress Development",
+
+        "image":
+        "assets/images/portfolio/business-portal.jpg",
+
+        "technology":
+        [
+            "WordPress",
+            "PHP",
+            "MySQL",
+            "Elementor"
+        ],
+
+        "achievement":
+        "Developed a high-performance corporate website with custom WordPress theme integration, advanced CMS features and improved loading speed."
+    },
+
+
+    {
+        "title":
+        "WooCommerce E-Commerce Platform",
+
+        "category":
+        "WooCommerce",
+
+        "image":
+        "assets/images/portfolio/ecommerce.jpg",
+
+        "technology":
+        [
+            "WooCommerce",
+            "PHP",
+            "Payment API",
+            "JavaScript"
+        ],
+
+        "achievement":
+        "Created a scalable online shopping platform with custom checkout workflow, product management and payment gateway integration."
+    },
+
+
+    {
+        "title":
+        "Laravel Business Automation System",
+
+        "category":
+        "PHP Application",
+
+        "image":
+        "assets/images/portfolio/laravel-app.jpg",
+
+        "technology":
+        [
+            "Laravel",
+            "PHP",
+            "REST API",
+            "Database"
+        ],
+
+        "achievement":
+        "Built a custom enterprise application that automated internal processes and reduced manual business operations."
+    },
+
+
+    {
+        "title":
+        "Many More Websites Developed",
+
+        "category":
+        "150+ Projects",
+
+        "image":
+        "assets/images/portfolio/more-projects.jpg",
+
+        "technology":
+        [
+            "WordPress",
+            "PHP",
+            "Laravel",
+            "Modern Web"
+        ],
+
+        "achievement":
+        "Explore many more websites, custom portals and business solutions developed using modern web technologies."
+    }
+]
