@@ -91,22 +91,36 @@ const App = {
     /**
      * Initialize application
      */
-    async init(){
+    async init() {
 
+		// Load HTML templates
+		await TemplateLoader.loadAll();
 
-        await this.loadTemplates();
+		// Initialize UI modules
+		if (window.Navigation) Navigation.init();
 
+		if (window.Theme) Theme.init();
 
+		if (window.Animations) Animations.init();
 
-        this.dispatchReadyEvent();
+		if (window.Portfolio) await Portfolio.init();
 
+		if (window.FAQ) FAQ.init();
 
+		if (window.Contact) Contact.init();
 
-        this.initializeModules();
+		if (window.LazyLoad) LazyLoad.init();
 
+		// Hide loader
+		const loader = document.querySelector(".page-loader");
 
+		if (loader) {
+			loader.classList.add("hidden");
 
-    },
+			setTimeout(() => loader.remove(), 500);
+		}
+
+	},
 
 
 
@@ -333,26 +347,8 @@ const App = {
 
 
 
-window.App =
-    App;
+window.App = App;
 
-
-
-
-
-
-
-/**
- * Start application
- */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    ()=>{
-
-
-        App.init();
-
-
-    }
-);
+document.addEventListener("DOMContentLoaded", async () => {
+    await App.init();
+});

@@ -3217,6 +3217,10 @@ p {
    TIMELINE LINE
 ================================================ */
 
+.timeline-content-container {
+	padding: 20px;
+}
+
 
 .experience-container::before {
 

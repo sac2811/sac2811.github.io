@@ -324,21 +324,4 @@ const ContactForm = {
 
 };
 
-
-
-
-
-/**
- * Initialize after templates load
- */
-
-document.addEventListener(
-    "templatesLoaded",
-    ()=>{
-
-
-        ContactForm.init();
-
-
-    }
-);
+window.ContactForm = ContactForm;

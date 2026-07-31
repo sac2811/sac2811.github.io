@@ -233,21 +233,4 @@ const ThemeManager = {
 
 };
 
-
-
-
-
-/**
- * Start theme manager
- */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    ()=>{
-
-
-        ThemeManager.init();
-
-
-    }
-);
+window.ThemeManager = ThemeManager;

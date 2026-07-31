@@ -184,12 +184,4 @@ const TemplateLoader = {
  * Start loader
  */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        TemplateLoader.loadAll();
-		TemplateLoader.hideLoader();
-
-    }
-);
+window.TemplateLoader = TemplateLoader;

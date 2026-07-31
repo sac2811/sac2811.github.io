@@ -161,6 +161,10 @@ const Portfolio = {
                 "portfolioRendered"
             )
         );
+		
+		if (window.Animations) {
+			Animations.observeNewElements();
+		}
 
 
     },
@@ -368,21 +372,4 @@ const Portfolio = {
 
 };
 
-
-
-
-
-/**
- * Initialize after templates load
- */
-
-document.addEventListener(
-    "templatesLoaded",
-    ()=>{
-
-
-        Portfolio.init();
-
-
-    }
-);
+window.Portfolio = Portfolio;

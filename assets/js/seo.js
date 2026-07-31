@@ -254,22 +254,3 @@ const SEO = {
 
 window.SEO =
     SEO;
-
-
-
-
-
-/**
- * Initialize after DOM ready
- */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    ()=>{
-
-
-        SEO.init();
-
-
-    }
-);

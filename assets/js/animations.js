@@ -25,103 +25,45 @@ const Animations = {
     /**
      * Initialize animations
      */
-    init(){
+    init() {
 
+		if (this.observer) return;
 
-        this.initReveal();
+		this.observer = new IntersectionObserver(entries => {
 
+			entries.forEach(entry => {
 
-        this.initSkills();
+				if (entry.isIntersecting) {
 
+					entry.target.classList.add("active");
+					this.observer.unobserve(entry.target);
 
-        this.initCounters();
+				}
 
+			});
 
-    },
+		}, {
+			threshold: 0.15
+		});
 
+		this.observeNewElements();
 
+		this.initSkills();
 
-    /**
-     * Reveal elements on scroll
-     */
-    initReveal(){
+		this.initCounters();
 
+	},
+	
+	observeNewElements() {
 
-        const elements =
-            document.querySelectorAll(
-                ".reveal, .reveal-left, .reveal-right"
-            );
+        document.querySelectorAll(
+            ".reveal:not([data-observed]), .reveal-left:not([data-observed]), .reveal-right:not([data-observed])"
+        ).forEach(el => {
 
+            el.dataset.observed = "true";
+            this.observer.observe(el);
 
-
-        if(!elements.length){
-
-            return;
-
-        }
-
-
-
-        this.observer =
-            new IntersectionObserver(
-
-                entries=>{
-
-
-                    entries.forEach(
-                        entry=>{
-
-
-                            if(entry.isIntersecting){
-
-
-                                entry.target
-                                .classList
-                                .add(
-                                    "active"
-                                );
-
-
-
-                                this.observer
-                                .unobserve(
-                                    entry.target
-                                );
-
-
-                            }
-
-
-                        }
-
-                    );
-
-
-                },
-
-                {
-
-                    threshold:.15
-
-                }
-
-            );
-
-
-
-        elements.forEach(
-            element=>{
-
-
-                this.observer.observe(
-                    element
-                );
-
-
-            }
-
-        );
-
+        });
 
     },
 
@@ -370,21 +312,4 @@ const Animations = {
 
 };
 
-
-
-
-
-/**
- * Initialize after templates load
- */
-
-document.addEventListener(
-    "templatesLoaded",
-    ()=>{
-
-
-        Animations.init();
-
-
-    }
-);
+window.Animations = Animations;

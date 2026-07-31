@@ -216,21 +216,4 @@ const FAQ = {
 
 };
 
-
-
-
-
-/**
- * Initialize after templates load
- */
-
-document.addEventListener(
-    "templatesLoaded",
-    ()=>{
-
-
-        FAQ.init();
-
-
-    }
-);
+window.FAQ = FAQ;

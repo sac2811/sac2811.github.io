@@ -208,22 +208,3 @@ const LazyLoad = {
 
 window.LazyLoad =
     LazyLoad;
-
-
-
-
-
-/**
- * Initialize after templates
- */
-
-document.addEventListener(
-    "templatesLoaded",
-    ()=>{
-
-
-        LazyLoad.init();
-
-
-    }
-);

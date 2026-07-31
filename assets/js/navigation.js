@@ -381,21 +381,4 @@ const Navigation = {
 
 };
 
-
-
-
-
-/**
- * Navigation starts after templates load
- */
-
-document.addEventListener(
-    "templatesLoaded",
-    ()=>{
-
-
-        Navigation.init();
-
-
-    }
-);
+window.Navigation = Navigation;
