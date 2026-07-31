@@ -1,146 +1,165 @@
-/* =====================================================
-   DEVCRAFT PREMIUM PORTFOLIO
-
-   Main Application Controller
-
-   ===================================================== */
-
-
-
-class DevCraftApp {
-
-
-
-    constructor(){
-
-
-        this.header = null;
-
-        this.menuButton = null;
-
-        this.navMenu = null;
-
-        this.backToTop = null;
-
-
-    }
-
-
-
-
-
-
+/**
+ * ==================================================
+ * PORTFOLIO V2
+ * MAIN APPLICATION CONTROLLER
+ * ==================================================
+ *
+ * Architecture:
+ *
+ * index.html
+ *
+ *      |
+ *      |
+ *      ↓
+ *
+ * fetch templates/*.html
+ *
+ *      |
+ *      |
+ *      ↓
+ *
+ * Inject HTML
+ *
+ *      |
+ *      |
+ *      ↓
+ *
+ * Initialize modules
+ *
+ * ==================================================
+ */
 
 
-    init(){
+const App = {
 
 
 
-        this.cacheElements();
+    templates:{
 
 
-        this.bindEvents();
+        header:
+        "templates/header.html",
 
 
-        this.updateYear();
+        hero:
+        "templates/hero.html",
 
 
-        this.removeLoader();
+        about:
+        "templates/about.html",
+
+
+        services:
+        "templates/services.html",
+
+
+        skills:
+        "templates/skills.html",
+
+
+        experience:
+        "templates/experience.html",
+
+
+        portfolio:
+        "templates/portfolio.html",
+
+
+        testimonials:
+        "templates/testimonials.html",
+
+
+        faq:
+        "templates/faq.html",
+
+
+        contact:
+        "templates/contact.html",
+
+
+        footer:
+        "templates/footer.html"
+
+
+    },
 
 
 
-    }
+
+
+
+    /**
+     * Initialize application
+     */
+    async init(){
+
+
+        await this.loadTemplates();
+
+
+
+        this.dispatchReadyEvent();
+
+
+
+        this.initializeModules();
+
+
+
+    },
 
 
 
 
 
 
+    /**
+     * Load all HTML templates
+     */
+    async loadTemplates(){
 
 
-    cacheElements(){
 
-
-
-        this.header =
-            document.querySelector(
-                "header"
+        const entries =
+            Object.entries(
+                this.templates
             );
 
 
 
-        this.menuButton =
-            document.querySelector(
-                ".menu-toggle"
+        await Promise.all(
+			Object.entries(this.templates).map(([id, path]) =>
+				this.loadTemplate(id, path)
+			)
+		);
+
+
+
+    },
+
+
+
+
+
+
+    /**
+     * Fetch single template
+     */
+    async loadTemplate(
+        id,
+        path
+    ){
+
+
+
+        const container =
+            document.getElementById(
+                id
             );
 
 
 
-        this.navMenu =
-            document.querySelector(
-                ".nav-menu"
-            );
-
-
-
-        this.backToTop =
-            document.querySelector(
-                "#back-to-top"
-            );
-
-
-    }
-
-
-
-
-
-
-
-
-    bindEvents(){
-
-
-
-        this.mobileMenu();
-
-
-        this.headerScroll();
-
-
-        this.smoothScroll();
-
-
-        this.backToTopAction();
-
-
-        this.contactForm();
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    /* ===============================
-       Mobile Menu
-       =============================== */
-
-
-    mobileMenu(){
-
-
-
-        if(
-            !this.menuButton ||
-            !this.navMenu
-        ){
+        if(!container){
 
             return;
 
@@ -150,472 +169,189 @@ class DevCraftApp {
 
 
 
-
-        this.menuButton
-        .addEventListener(
-            "click",
-            ()=>{
+        try{
 
 
-                this.menuButton
-                .classList
-                .toggle(
-                    "active"
+            const response =
+                await fetch(
+                    path
                 );
 
 
 
-                this.navMenu
-                .classList
-                .toggle(
-                    "active"
-                );
+            if(!response.ok){
 
 
-
-            }
-        );
-
-
-
-
-
-
-
-
-        document
-        .querySelectorAll(
-            ".nav-link"
-        )
-        .forEach(
-            link=>{
-
-
-                link
-                .addEventListener(
-                    "click",
-                    ()=>{
-
-
-                        this.menuButton
-                        .classList
-                        .remove(
-                            "active"
-                        );
-
-
-
-                        this.navMenu
-                        .classList
-                        .remove(
-                            "active"
-                        );
-
-
-                    }
+                throw new Error(
+                    `Unable to load ${path}`
                 );
 
 
             }
-        );
 
 
-    }
 
 
 
+            container.innerHTML =
+                await response.text();
 
 
 
-
-
-
-    /* ===============================
-       Sticky Header
-       =============================== */
-
-
-    headerScroll(){
-
-
-
-        window
-        .addEventListener(
-            "scroll",
-            ()=>{
-
-
-                if(
-                    window.scrollY > 50
-                ){
-
-
-                    this.header
-                    ?.classList
-                    .add(
-                        "scrolled"
-                    );
-
-
-                }
-                else{
-
-
-                    this.header
-                    ?.classList
-                    .remove(
-                        "scrolled"
-                    );
-
-
-                }
-
-
-
-            }
-        );
-
-
-    }
-
-
-
-
-
-
-
-
-
-    /* ===============================
-       Smooth Navigation
-       =============================== */
-
-
-    smoothScroll(){
-
-
-
-        document
-        .querySelectorAll(
-            'a[href^="#"]'
-        )
-        .forEach(
-            anchor=>{
-
-
-                anchor
-                .addEventListener(
-                    "click",
-                    event=>{
-
-
-                        const target =
-                            document
-                            .querySelector(
-                                anchor
-                                .getAttribute(
-                                    "href"
-                                )
-                            );
-
-
-
-                        if(target){
-
-
-                            event.preventDefault();
-
-
-
-                            target
-                            .scrollIntoView({
-
-                                behavior:
-                                "smooth"
-
-
-                            });
-
-
-                        }
-
-
-                    }
-                );
-
-
-            }
-        );
-
-
-    }
-
-
-
-
-
-
-
-
-
-    /* ===============================
-       Back To Top
-       =============================== */
-
-
-    backToTopAction(){
-
-
-
-        if(
-            !this.backToTop
-        ){
-
-            return;
 
         }
+        catch(error){
 
 
 
-
-
-
-        window
-        .addEventListener(
-            "scroll",
-            ()=>{
-
-
-                if(
-                    window.scrollY > 600
-                ){
-
-
-                    this.backToTop
-                    .classList
-                    .add(
-                        "show"
-                    );
-
-
-                }
-                else{
-
-
-                    this.backToTop
-                    .classList
-                    .remove(
-                        "show"
-                    );
-
-
-                }
-
-
-
-            }
-        );
-
-
-
-
-
-
-
-
-        this.backToTop
-        .addEventListener(
-            "click",
-            ()=>{
-
-
-                window
-                .scrollTo({
-
-                    top:0,
-
-                    behavior:
-                    "smooth"
-
-
-                });
-
-
-            }
-        );
-
-
-    }
-
-
-
-
-
-
-
-
-
-    /* ===============================
-       Dynamic Year
-       =============================== */
-
-
-    updateYear(){
-
-
-
-        const year =
-            document
-            .querySelector(
-                "#current-year"
+            console.error(
+                error
             );
 
 
 
-        if(year){
+            container.innerHTML =
+            `
+            <div class="template-error">
 
+                Unable to load section.
 
-            year.textContent =
-                new Date()
-                .getFullYear();
+            </div>
+            `;
 
 
         }
 
 
 
-    }
+    },
 
 
 
 
 
 
+    /**
+     * Notify modules
+     */
+    dispatchReadyEvent(){
 
 
 
-    /* ===============================
-       Loader
-       =============================== */
-
-
-    removeLoader(){
-
-
-
-        setTimeout(
-            ()=>{
-
-
-                document
-                .body
-                .classList
-                .add(
-                    "page-loaded"
-                );
-
-
-
-            },
-            800
+        document.dispatchEvent(
+            new Event(
+                "templatesLoaded"
+            )
         );
 
 
-    }
+
+    },
 
 
 
 
 
 
+    /**
+     * Initialize dynamic modules
+     */
+    initializeModules(){
 
 
 
-    /* ===============================
-       Contact Form
-       =============================== */
+        if(window.Navigation){
 
-
-    contactForm(){
-
-
-
-        const form =
-            document
-            .querySelector(
-                "#contact-form"
-            );
-
-
-
-        if(!form){
-
-            return;
+            Navigation.init();
 
         }
 
 
 
 
+        if(window.Theme){
 
+            Theme.init();
 
-        form
-        .addEventListener(
-            "submit",
-            event=>{
-
-
-                event.preventDefault();
+        }
 
 
 
-                alert(
-                    "Thank you! Your message has been received."
-                );
+
+        if(window.Animations){
+
+            Animations.init();
+
+        }
 
 
 
-                form.reset();
+
+        if(window.Portfolio){
+
+            Portfolio.init();
+
+        }
 
 
 
-            }
-        );
+
+        if(window.FAQ){
+
+            FAQ.init();
+
+        }
+
+
+
+
+        if(window.Contact){
+
+            Contact.init();
+
+        }
+
+
+
+
+        if(window.LazyLoad){
+
+            LazyLoad.init();
+
+        }
+
+
 
 
     }
 
 
-
-}
-
+};
 
 
 
 
 
 
+window.App =
+    App;
 
 
-/*
-   Initialize after templates
-   are injected
-*/
 
 
-document
-.addEventListener(
-    "templatesLoaded",
+
+
+
+/**
+ * Start application
+ */
+
+document.addEventListener(
+    "DOMContentLoaded",
     ()=>{
 
 
-        const app =
-            new DevCraftApp();
-
-
-
-        app.init();
-
+        App.init();
 
 
     }

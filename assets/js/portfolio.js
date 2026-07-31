@@ -1,44 +1,41 @@
-/* =====================================================
-   DEVCRAFT PREMIUM PORTFOLIO
+/**
+ * ==================================================
+ * PORTFOLIO V2
+ * Portfolio Data Controller
+ * ==================================================
+ *
+ * Handles:
+ * - JSON portfolio loading
+ * - Dynamic card rendering
+ * - Category filtering
+ *
+ * ==================================================
+ */
 
-   Dynamic Portfolio Loader
 
-   ===================================================== */
-
+const Portfolio = {
 
 
+    data:[],
 
 
-class PortfolioLoader {
+    container:null,
 
 
-
-    constructor(){
+    /**
+     * Initialize portfolio
+     */
+    async init(){
 
 
         this.container =
             document.querySelector(
-                "#portfolio-container"
+                ".portfolio-grid"
             );
 
 
-    }
 
-
-
-
-
-
-
-
-
-    async init(){
-
-
-
-        if(
-            !this.container
-        ){
+        if(!this.container){
 
             return;
 
@@ -46,10 +43,28 @@ class PortfolioLoader {
 
 
 
+        await this.loadProjects();
 
 
-        try {
+        this.renderProjects(
+            this.data
+        );
 
+
+        this.initFilters();
+
+
+    },
+
+
+
+    /**
+     * Load JSON data
+     */
+    async loadProjects(){
+
+
+        try{
 
 
             const response =
@@ -59,47 +74,75 @@ class PortfolioLoader {
 
 
 
+            if(!response.ok){
+
+                throw new Error(
+                    "Portfolio data unavailable"
+                );
+
+            }
 
 
-            const projects =
+
+            this.data =
                 await response.json();
 
 
-
-
-
-            this.render(
-                projects
-            );
-
-
-
         }
+
         catch(error){
 
 
-
             console.error(
-                "Portfolio loading error:",
                 error
             );
 
 
+            this.container.innerHTML = `
+
+                <div class="portfolio-empty">
+
+                    <p>
+                    Unable to load projects.
+                    </p>
+
+                </div>
+
+            `;
+
+
         }
 
 
-
-    }
-
+    },
 
 
 
+    /**
+     * Render portfolio cards
+     */
+    renderProjects(projects){
 
 
+        if(!projects.length){
 
 
+            this.container.innerHTML = `
 
-    render(projects){
+                <div class="portfolio-empty">
+
+                    <p>
+                    No projects found.
+                    </p>
+
+                </div>
+
+            `;
+
+
+            return;
+
+        }
 
 
 
@@ -107,118 +150,238 @@ class PortfolioLoader {
             projects
             .map(
                 project =>
-                `
-
-
-<div class="portfolio-card glass-card">
-
-
-
-    <div class="portfolio-image">
-
-
-        <img
-		data-src="${project.image}"
-		src="assets/images/placeholder.webp"
-		alt="${project.title}"
-		loading="lazy"
-		>
-
-
-    </div>
-
-
-
-
-
-    <div class="portfolio-content">
-
-
-        <span class="badge">
-
-            ${project.category}
-
-        </span>
-
-
-
-        <h3>
-
-            ${project.title}
-
-        </h3>
-
-
-
-
-        <p>
-
-            ${project.achievement}
-
-        </p>
-
-
-
-
-        <div class="badges">
-
-
-        ${
-            project.technology
-            .map(
-                tech =>
-                `
-                <span class="badge">
-                    ${tech}
-                </span>
-                `
-            )
-            .join("")
-        }
-
-
-        </div>
-
-
-    </div>
-
-
-</div>
-
-
-`
+                this.createCard(project)
             )
             .join("");
 
 
 
+        document.dispatchEvent(
+            new CustomEvent(
+                "portfolioRendered"
+            )
+        );
+
+
+    },
+
+
+
+    /**
+     * Create card HTML
+     */
+    createCard(project){
+
+
+        return `
+
+        <article class="portfolio-card reveal">
+
+
+            <div class="portfolio-image">
+
+
+                <img
+                    src="${project.image}"
+                    alt="${project.title}"
+                    loading="lazy"
+                >
+
+
+                <div class="portfolio-overlay">
+
+
+                    <a
+                        href="${project.url}"
+                        class="portfolio-link"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="View project"
+                    >
+
+                        ↗
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="portfolio-content">
+
+
+                <span class="portfolio-category">
+
+                    ${project.category}
+
+                </span>
+
+
+
+                <h3>
+
+                    ${project.title}
+
+                </h3>
+
+
+
+                <p>
+
+                    ${project.description}
+
+                </p>
+
+
+
+                <div class="portfolio-tags">
+
+
+                    ${
+                        project.tags
+                        .map(
+                            tag =>
+                            `
+                            <span class="portfolio-tag">
+                                ${tag}
+                            </span>
+                            `
+                        )
+                        .join("")
+                    }
+
+
+                </div>
+
+
+            </div>
+
+
+        </article>
+
+        `;
+
+
+    },
+
+
+
+    /**
+     * Category filters
+     */
+    initFilters(){
+
+
+        const buttons =
+            document.querySelectorAll(
+                ".filter-btn"
+            );
+
+
+
+        if(!buttons.length){
+
+            return;
+
+        }
+
+
+
+        buttons.forEach(
+            button=>{
+
+
+                button.addEventListener(
+                    "click",
+                    ()=>{
+
+
+                        buttons.forEach(
+                            btn =>
+                            btn.classList
+                            .remove(
+                                "active"
+                            )
+                        );
+
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+
+                        const category =
+                            button.dataset
+                            .filter;
+
+
+
+                        if(
+                            category === "all"
+                        ){
+
+
+                            this.renderProjects(
+                                this.data
+                            );
+
+
+                            return;
+
+
+                        }
+
+
+
+                        const filtered =
+                            this.data.filter(
+                                project =>
+                                project.category
+                                === category
+                            );
+
+
+
+                        this.renderProjects(
+                            filtered
+                        );
+
+
+                    }
+
+                );
+
+
+            }
+
+        );
+
+
     }
 
 
-
-}
-
+};
 
 
 
 
 
+/**
+ * Initialize after templates load
+ */
 
-
-
-document
-.addEventListener(
+document.addEventListener(
     "templatesLoaded",
     ()=>{
 
 
-        const portfolio =
-            new PortfolioLoader();
-
-
-
-        portfolio.init();
-
+        Portfolio.init();
 
 
     }

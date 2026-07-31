@@ -1,50 +1,44 @@
-/* =====================================================
-   DEVCRAFT PREMIUM PORTFOLIO
+/**
+ * ==================================================
+ * PORTFOLIO V2
+ * Contact Form Controller
+ * ==================================================
+ *
+ * Handles:
+ * - Form validation
+ * - User feedback
+ * - Submission preparation
+ *
+ * Ready for:
+ * - PHP API
+ * - Laravel API
+ * - WordPress AJAX
+ *
+ * ==================================================
+ */
 
-   Contact Form Controller
 
-   ===================================================== */
-
+const ContactForm = {
 
 
-
-
-class ContactForm {
+    form:null,
 
 
 
-    constructor(){
+    /**
+     * Initialize contact form
+     */
+    init(){
 
 
         this.form =
             document.querySelector(
-                "#contact-form"
+                "#contactForm"
             );
 
 
-        this.messageBox =
-            document.querySelector(
-                ".form-message"
-            );
 
-
-    }
-
-
-
-
-
-
-
-
-
-    init(){
-
-
-
-        if(
-            !this.form
-        ){
+        if(!this.form){
 
             return;
 
@@ -55,23 +49,17 @@ class ContactForm {
         this.bindEvents();
 
 
-
-    }
-
+    },
 
 
 
-
-
-
-
-
+    /**
+     * Bind submit event
+     */
     bindEvents(){
 
 
-
-        this.form
-        .addEventListener(
+        this.form.addEventListener(
             "submit",
             event=>{
 
@@ -79,111 +67,58 @@ class ContactForm {
                 event.preventDefault();
 
 
-
                 this.submit();
-
 
 
             }
         );
 
 
-
-    }
-
+    },
 
 
 
+    /**
+     * Submit handler
+     */
+    submit(){
 
 
-
-
-
-    validate(){
-
-
-
-        const fields =
-            this.form
-            .querySelectorAll(
-                "[required]"
+        const formData =
+            new FormData(
+                this.form
             );
 
 
 
-
-
-        let valid =
-            true;
-
-
-
-
-
-        fields
-        .forEach(
-            field=>{
+        const name =
+            formData.get(
+                "name"
+            )
+            .trim();
 
 
 
-                field
-                .classList
-                .remove(
-                    "error"
-                );
+        const email =
+            formData.get(
+                "email"
+            )
+            .trim();
 
 
 
-                if(
-                    !field.value.trim()
-                ){
-
-
-
-                    field
-                    .classList
-                    .add(
-                        "error"
-                    );
-
-
-                    valid =
-                        false;
-
-
-                }
-
-
-
-            }
-        );
-
-
-
-
-
-
-
-        return valid;
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    async submit(){
+        const message =
+            formData.get(
+                "message"
+            )
+            .trim();
 
 
 
         if(
-            !this.validate()
+            !name ||
+            !email ||
+            !message
         ){
 
 
@@ -195,139 +130,22 @@ class ContactForm {
 
             return;
 
-
         }
-
-
-
-
-
-
-
-
-        const button =
-            this.form
-            .querySelector(
-                "button[type='submit']"
-            );
-
-
-
-
-
-        if(button){
-
-
-            button
-            .disabled =
-                true;
-
-
-            button
-            .innerHTML =
-                "Sending...";
-
-
-        }
-
-
-
-
-
-
-
-
-
-        /*
-            Future API endpoint:
-
-            fetch(
-              "/api/contact",
-              {
-                 method:"POST",
-                 body:formData
-              }
-            )
-
-        */
-
-
-
-
-
-
-        await new Promise(
-            resolve =>
-            setTimeout(
-                resolve,
-                1200
-            )
-        );
-
-
-
-
-
-
-
-
-        this.showMessage(
-            "Thank you! Your message has been sent successfully.",
-            "success"
-        );
-
-
-
-
-
-
-
-        this.form.reset();
-
-
-
-
-
-
-
-
-        if(button){
-
-
-            button
-            .disabled =
-                false;
-
-
-            button
-            .innerHTML =
-                "Send Message";
-
-
-        }
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    showMessage(
-        text,
-        type
-    ){
 
 
 
         if(
-            !this.messageBox
+            !this.validateEmail(
+                email
+            )
         ){
+
+
+            this.showMessage(
+                "Please enter a valid email address.",
+                "error"
+            );
+
 
             return;
 
@@ -335,47 +153,191 @@ class ContactForm {
 
 
 
+        this.setLoading(
+            true
+        );
 
 
-        this.messageBox
-        .className =
+
+        /*
+            Production integration point
+
+            Example:
+
+            fetch("/contact.php",{
+                method:"POST",
+                body:formData
+            })
+
+        */
+
+
+
+        setTimeout(
+            ()=>{
+
+
+                this.setLoading(
+                    false
+                );
+
+
+                this.showMessage(
+                    "Thank you! Your message has been sent.",
+                    "success"
+                );
+
+
+                this.form.reset();
+
+
+
+            },
+            1200
+        );
+
+
+    },
+
+
+
+    /**
+     * Email validation
+     */
+    validateEmail(email){
+
+
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            .test(email);
+
+
+    },
+
+
+
+    /**
+     * Show message
+     */
+    showMessage(
+        text,
+        type
+    ){
+
+
+        let box =
+            this.form.querySelector(
+                ".form-message"
+            );
+
+
+
+        if(!box){
+
+            return;
+
+        }
+
+
+
+        box.textContent =
+            text;
+
+
+
+        box.className =
             `form-message ${type}`;
 
 
 
-        this.messageBox
-        .textContent =
-            text;
+        setTimeout(
+            ()=>{
 
+
+                box.className =
+                    "form-message";
+
+
+            },
+            5000
+        );
+
+
+    },
+
+
+
+    /**
+     * Loading state
+     */
+    setLoading(state){
+
+
+        const button =
+            this.form.querySelector(
+                "button[type='submit']"
+            );
+
+
+
+        if(!button){
+
+            return;
+
+        }
+
+
+
+        if(state){
+
+
+            button.disabled =
+                true;
+
+
+            button.dataset.text =
+                button.textContent;
+
+
+            button.textContent =
+                "Sending...";
+
+
+        }
+
+        else{
+
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                button.dataset.text ||
+                "Send Message";
+
+
+        }
 
 
     }
 
 
-
-}
-
+};
 
 
 
 
 
+/**
+ * Initialize after templates load
+ */
 
-
-
-document
-.addEventListener(
+document.addEventListener(
     "templatesLoaded",
     ()=>{
 
 
-        const contact =
-            new ContactForm();
-
-
-
-        contact.init();
-
+        ContactForm.init();
 
 
     }

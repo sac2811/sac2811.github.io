@@ -1,130 +1,31 @@
-/* =====================================================
-   DEVCRAFT PREMIUM PORTFOLIO
-
-   Theme Switcher Controller
-
-   ===================================================== */
-
-
-
-
-
-class ThemeManager {
-
-
-
-    constructor(){
+/**
+ * ==================================================
+ * PORTFOLIO V2
+ * Theme Manager
+ * ==================================================
+ *
+ * Features:
+ * - Dark / Light mode
+ * - LocalStorage persistence
+ * - System preference detection
+ * - Dynamic theme toggle support
+ *
+ * ==================================================
+ */
 
 
-        this.storageKey =
-            "devcraft-theme";
+const ThemeManager = {
 
 
-        this.toggle =
-            null;
-
-
-    }
+    storageKey:
+        "portfolio-theme",
 
 
 
-
-
-
-
-
-
+    /**
+     * Initialize theme system
+     */
     init(){
-
-
-
-        this.loadTheme();
-
-
-        this.findToggle();
-
-
-        this.bindEvents();
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    findToggle(){
-
-
-
-        this.toggle =
-            document.querySelector(
-                "#theme-toggle"
-            );
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    bindEvents(){
-
-
-
-        if(
-            !this.toggle
-        ){
-
-            return;
-
-        }
-
-
-
-
-
-
-
-
-        this.toggle
-        .addEventListener(
-            "click",
-            ()=>{
-
-
-                this.toggleTheme();
-
-
-
-            }
-        );
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    loadTheme(){
-
 
 
         const savedTheme =
@@ -134,108 +35,218 @@ class ThemeManager {
 
 
 
+        if(savedTheme){
 
 
-        if(
-            savedTheme
-        ){
-
-
-
-            document.documentElement
-            .setAttribute(
-                "data-theme",
+            this.apply(
                 savedTheme
             );
 
+
+        }
+
+        else{
+
+
+            const prefersLight =
+                window.matchMedia(
+                    "(prefers-color-scheme: light)"
+                ).matches;
+
+
+
+            this.apply(
+                prefersLight
+                ? "light"
+                : "dark"
+            );
 
 
         }
 
 
 
-    }
+        this.bindEvents();
+
+
+    },
 
 
 
+    /**
+     * Apply selected theme
+     */
+    apply(theme){
+
+
+        if(theme === "light"){
+
+
+            document.body.classList.add(
+                "light"
+            );
+
+
+        }
+
+        else{
+
+
+            document.body.classList.remove(
+                "light"
+            );
+
+
+        }
 
 
 
+        localStorage.setItem(
+            this.storageKey,
+            theme
+        );
 
 
 
-    toggleTheme(){
+        document.dispatchEvent(
+            new CustomEvent(
+                "themeChanged",
+                {
+
+                    detail:{
+                        theme
+                    }
+
+                }
+            )
+        );
+
+
+        this.updateIcon(
+            theme
+        );
+
+
+    },
 
 
 
-        const current =
-            document.documentElement
-            .getAttribute(
-                "data-theme"
+    /**
+     * Toggle theme
+     */
+    toggle(){
+
+
+        const isLight =
+            document.body.classList.contains(
+                "light"
             );
 
 
 
-
-
-        const next =
-            current === "light"
-            ?
-            "dark"
-            :
-            "light";
-
-
-
-
-
-
-
-        document.documentElement
-        .setAttribute(
-            "data-theme",
-            next
+        this.apply(
+            isLight
+            ? "dark"
+            : "light"
         );
 
 
+    },
 
 
 
-        localStorage
-        .setItem(
-            this.storageKey,
-            next
+    /**
+     * Attach toggle button
+     */
+    bindEvents(){
+
+
+        document.addEventListener(
+            "click",
+            event=>{
+
+
+                const button =
+                    event.target.closest(
+                        "[data-theme-toggle]"
+                    );
+
+
+
+                if(!button){
+
+                    return;
+
+                }
+
+
+
+                this.toggle();
+
+
+            }
+
         );
 
+
+    },
+
+
+
+    /**
+     * Update toggle icon
+     */
+    updateIcon(theme){
+
+
+        const buttons =
+            document.querySelectorAll(
+                "[data-theme-toggle]"
+            );
+
+
+
+        buttons.forEach(
+            button=>{
+
+
+                button.innerHTML =
+                    theme === "light"
+                    ? "🌙"
+                    : "☀️";
+
+
+                button.setAttribute(
+                    "aria-label",
+                    theme === "light"
+                    ? "Enable dark mode"
+                    : "Enable light mode"
+                );
+
+
+            }
+        );
 
 
     }
 
 
-
-}
-
+};
 
 
 
 
 
+/**
+ * Start theme manager
+ */
 
-
-
-document
-.addEventListener(
-    "templatesLoaded",
+document.addEventListener(
+    "DOMContentLoaded",
     ()=>{
 
 
-        const theme =
-            new ThemeManager();
-
-
-
-        theme.init();
-
+        ThemeManager.init();
 
 
     }

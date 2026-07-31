@@ -1,19 +1,29 @@
-/* =====================================================
-   DEVCRAFT PREMIUM PORTFOLIO
+/**
+ * ==================================================
+ * PORTFOLIO V2
+ * Lazy Loading Controller
+ * ==================================================
+ *
+ * Handles:
+ * - Image lazy loading
+ * - Progressive loading
+ * - Performance optimization
+ *
+ * ==================================================
+ */
 
-   Image Lazy Loading Controller
 
-   ===================================================== */
-
+const LazyLoad = {
 
 
-
-
-class LazyImageLoader {
+    images: [],
 
 
 
-    constructor(){
+    /**
+     * Initialize
+     */
+    init(){
 
 
         this.images =
@@ -22,27 +32,37 @@ class LazyImageLoader {
             );
 
 
-        this.observer =
-            null;
 
+        if(!this.images.length){
 
-    }
+            return;
 
-
-
-
+        }
 
 
 
+        this.observe();
 
 
-    init(){
+    },
 
+
+
+
+
+    /**
+     * Setup observer
+     */
+    observe(){
 
 
         if(
-            !this.images.length
+            !("IntersectionObserver" in window)
         ){
+
+
+            this.loadAll();
+
 
             return;
 
@@ -52,36 +72,13 @@ class LazyImageLoader {
 
 
 
-        this.createObserver();
-
-
-        this.observe();
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    createObserver(){
-
-
-
-        this.observer =
+        const observer =
             new IntersectionObserver(
-                entries => {
-
+                entries=>{
 
 
                     entries.forEach(
-                        entry => {
-
+                        entry=>{
 
 
                             if(
@@ -89,27 +86,21 @@ class LazyImageLoader {
                             ){
 
 
-
-                                this.loadImage(
+                                this.load(
                                     entry.target
                                 );
 
 
-
-                                this.observer
-                                .unobserve(
+                                observer.unobserve(
                                     entry.target
                                 );
-
 
 
                             }
 
 
-
                         }
                     );
-
 
 
                 },
@@ -122,27 +113,82 @@ class LazyImageLoader {
             );
 
 
-    }
 
 
 
-
-
-
-
-
-
-    observe(){
-
-
-
-        this.images
-        .forEach(
+        this.images.forEach(
             image=>{
 
 
-                this.observer
-                .observe(
+                observer.observe(
+                    image
+                );
+
+
+            }
+        );
+
+
+    },
+
+
+
+
+
+    /**
+     * Load image
+     */
+    load(
+        image
+    ){
+
+
+        const source =
+            image.dataset.src;
+
+
+
+        if(!source){
+
+            return;
+
+        }
+
+
+
+        image.src =
+            source;
+
+
+
+        image.removeAttribute(
+            "data-src"
+        );
+
+
+
+        image.classList.add(
+            "loaded"
+        );
+
+
+    },
+
+
+
+
+
+    /**
+     * Fallback loading
+     */
+    loadAll(){
+
+
+        this.images.forEach(
+            image=>{
+
+
+                this.load(
                     image
                 );
 
@@ -154,88 +200,29 @@ class LazyImageLoader {
     }
 
 
+};
 
 
 
 
 
-
-
-    loadImage(image){
-
-
-
-        const source =
-            image.dataset.src;
+window.LazyLoad =
+    LazyLoad;
 
 
 
 
 
-        if(
-            !source
-        ){
+/**
+ * Initialize after templates
+ */
 
-            return;
-
-        }
-
-
-
-
-
-
-
-        image.src =
-            source;
-
-
-
-
-
-        image
-        .removeAttribute(
-            "data-src"
-        );
-
-
-
-
-
-        image
-        .classList
-        .add(
-            "loaded"
-        );
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-document
-.addEventListener(
+document.addEventListener(
     "templatesLoaded",
     ()=>{
 
 
-        const lazyLoader =
-            new LazyImageLoader();
-
-
-
-        lazyLoader.init();
-
+        LazyLoad.init();
 
 
     }

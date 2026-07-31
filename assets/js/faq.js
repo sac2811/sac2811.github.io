@@ -1,19 +1,28 @@
-/* =====================================================
-   DEVCRAFT PREMIUM PORTFOLIO
+/**
+ * ==================================================
+ * PORTFOLIO V2
+ * FAQ Accordion Controller
+ * ==================================================
+ *
+ * Handles:
+ * - FAQ expand/collapse
+ * - Smooth animations
+ * - Accessibility
+ *
+ * ==================================================
+ */
 
-   FAQ Accordion Controller
 
-   ===================================================== */
-
+const FAQ = {
 
 
+    items:[],
 
 
-class FAQAccordion {
-
-
-
-    constructor(){
+    /**
+     * Initialize FAQ
+     */
+    init(){
 
 
         this.items =
@@ -22,23 +31,8 @@ class FAQAccordion {
             );
 
 
-    }
 
-
-
-
-
-
-
-
-
-    init(){
-
-
-
-        if(
-            !this.items.length
-        ){
+        if(!this.items.length){
 
             return;
 
@@ -49,25 +43,18 @@ class FAQAccordion {
         this.bindEvents();
 
 
-
-    }
-
+    },
 
 
 
-
-
-
-
-
+    /**
+     * Bind FAQ events
+     */
     bindEvents(){
 
 
-
-        this.items
-        .forEach(
+        this.items.forEach(
             item=>{
-
 
 
                 const button =
@@ -76,10 +63,14 @@ class FAQAccordion {
                     );
 
 
+                const answer =
+                    item.querySelector(
+                        ".faq-answer"
+                    );
 
 
 
-                if(!button){
+                if(!button || !answer){
 
                     return;
 
@@ -87,17 +78,22 @@ class FAQAccordion {
 
 
 
+                button.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
 
 
 
-                button
-                .addEventListener(
+                button.addEventListener(
                     "click",
                     ()=>{
 
 
                         this.toggle(
-                            item
+                            item,
+                            button,
+                            answer
                         );
 
 
@@ -110,39 +106,102 @@ class FAQAccordion {
         );
 
 
-    }
+    },
 
 
 
+    /**
+     * Toggle FAQ item
+     */
+    toggle(
+        item,
+        button,
+        answer
+    ){
+
+
+        const active =
+            item.classList.contains(
+                "active"
+            );
 
 
 
+        this.closeAll();
 
 
 
-    toggle(activeItem){
+        if(!active){
+
+
+            item.classList.add(
+                "active"
+            );
+
+
+            button.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+
+            answer.style.maxHeight =
+                answer.scrollHeight +
+                "px";
+
+
+        }
+
+
+    },
 
 
 
-        this.items
-        .forEach(
+    /**
+     * Close all items
+     */
+    closeAll(){
+
+
+        this.items.forEach(
             item=>{
 
 
-
-                if(
-                    item !== activeItem
-                ){
-
+                item.classList.remove(
+                    "active"
+                );
 
 
-                    item
-                    .classList
-                    .remove(
-                        "active"
+
+                const button =
+                    item.querySelector(
+                        ".faq-question"
                     );
 
 
+
+                const answer =
+                    item.querySelector(
+                        ".faq-answer"
+                    );
+
+
+
+                if(button){
+
+                    button.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+
+
+
+                if(answer){
+
+                    answer.style.maxHeight =
+                        null;
 
                 }
 
@@ -152,51 +211,25 @@ class FAQAccordion {
         );
 
 
-
-
-
-
-
-        activeItem
-        .classList
-        .toggle(
-            "active"
-        );
-
-
-
     }
 
 
-
-}
-
+};
 
 
 
 
 
+/**
+ * Initialize after templates load
+ */
 
-
-
-/*
-    Initialize after templates load
-*/
-
-
-document
-.addEventListener(
+document.addEventListener(
     "templatesLoaded",
     ()=>{
 
 
-        const faq =
-            new FAQAccordion();
-
-
-
-        faq.init();
-
+        FAQ.init();
 
 
     }

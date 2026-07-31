@@ -1,45 +1,78 @@
-/* =====================================================
-   DEVCRAFT PREMIUM PORTFOLIO
+/**
+ * ==================================================
+ * PORTFOLIO V2
+ * Template Loader
+ * ==================================================
+ *
+ * Loads reusable HTML sections dynamically using
+ * native JavaScript fetch()
+ *
+ * No frameworks
+ * No dependencies
+ *
+ * ==================================================
+ */
 
-   Dynamic HTML Template Loader
 
-   Replaces PHP Includes
-   ===================================================== */
+const TemplateLoader = {
 
-
-
-class TemplateLoader {
-
+    /**
+     * Template directory location
+     */
+    basePath: "templates/",
 
 
-    constructor(){
+    /**
+     * Templates to load
+     *
+     * key:
+     *  DOM container ID
+     *
+     * value:
+     *  template filename
+     */
+    templates: {
+
+        header: "header.html",
+
+        hero: "hero.html",
+
+        about: "about.html",
+
+        services: "services.html",
+
+        skills: "skills.html",
+
+        experience: "experience.html",
+
+        portfolio: "portfolio.html",
+
+        testimonials: "testimonials.html",
+
+        faq: "faq.html",
+
+        contact: "contact.html",
+
+        footer: "footer.html"
+
+    },
 
 
-        this.templates =
-            document.querySelectorAll(
-                "[data-template]"
+    /**
+     * Load single template
+     */
+    async loadTemplate(container, file){
+
+
+        const element =
+            document.getElementById(container);
+
+
+        if(!element){
+
+            console.warn(
+                `Template container missing: ${container}`
             );
-
-
-    }
-
-
-
-
-
-
-
-    async loadTemplate(element){
-
-
-        const file =
-            element.getAttribute(
-                "data-template"
-            );
-
-
-
-        if(!file){
 
             return;
 
@@ -47,33 +80,23 @@ class TemplateLoader {
 
 
 
-
-
-
-        try {
-
+        try{
 
 
             const response =
-                await fetch(file);
-
-
+                await fetch(
+                    `${this.basePath}${file}`
+                );
 
 
 
             if(!response.ok){
 
-
                 throw new Error(
-                    `Unable to load ${file}`
+                    `Failed loading ${file}`
                 );
 
-
             }
-
-
-
-
 
 
 
@@ -82,123 +105,91 @@ class TemplateLoader {
 
 
 
-
-
-            element.innerHTML =
-                html;
-
-
-
+            element.innerHTML = html;
 
 
 
         }
+
         catch(error){
 
 
-
             console.error(
-                "Template loading failed:",
+                "Template loading error:",
                 error
             );
 
 
-
-            element.innerHTML =
-            `
-
-            <div class="template-error">
-
-                Template unavailable
-
-            </div>
-
+            element.innerHTML = `
+                <div class="template-error">
+                    Unable to load ${file}
+                </div>
             `;
 
 
         }
 
 
-
-    }
-
+    },
 
 
 
-
-
-
-
+    /**
+     * Load all templates
+     */
     async loadAll(){
 
 
         const promises =
-            Array.from(
-                this.templates
-            )
+            Object.entries(this.templates)
             .map(
-                element =>
-                this.loadTemplate(element)
+                ([container,file]) =>
+                    this.loadTemplate(
+                        container,
+                        file
+                    )
             );
 
 
 
-        await Promise.all(
-            promises
-        );
+        await Promise.all(promises);
 
-
-
-        this.initialize();
-
-
-
-    }
-
-
-
-
-
-
-
-
-    initialize(){
 
 
         document.dispatchEvent(
-            new Event(
+            new CustomEvent(
                 "templatesLoaded"
             )
         );
 
 
+    },
+	
+	async hideLoader() {
+		const loader = document.querySelector(".page-loader");
 
-    }
+		if (!loader) return;
+
+		loader.classList.add("hidden");
+
+		setTimeout(() => loader.remove(), 500);
+	}
+
+
+};
 
 
 
-}
-
-
-
-
-
-
-
-
+/**
+ * Start loader
+ */
 
 document.addEventListener(
-"DOMContentLoaded",
-()=>{
+    "DOMContentLoaded",
+    () => {
 
+        TemplateLoader.loadAll();
+		TemplateLoader.hideLoader();
 
-    const loader =
-        new TemplateLoader();
-
-
-
-    loader.loadAll();
-
-
-
-});
+    }
+);

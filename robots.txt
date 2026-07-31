@@ -1,8 +1,0 @@
-User-agent: *
-
-Allow: /
-
-
-Sitemap:
-
-https://sac2811.github.io/sitemap.xml

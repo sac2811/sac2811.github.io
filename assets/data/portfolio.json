@@ -1,92 +1,90 @@
 [
     {
-        "title":
-        "Corporate WordPress Business Portal",
-
-        "category":
-        "WordPress Development",
-
-        "image":
-        "assets/images/portfolio/business-portal.jpg",
-
-        "technology":
-        [
-            "WordPress",
+        "title": "Laravel Business Management ERP",
+        "category": "Laravel",
+        "description": "A scalable enterprise ERP platform with user management, reporting dashboards, automation workflows and secure API integrations.",
+        "image": "assets/images/portfolio/laravel-erp.jpg",
+        "url": "#",
+        "tags": [
+            "Laravel",
             "PHP",
             "MySQL",
-            "Elementor"
-        ],
-
-        "achievement":
-        "Developed a high-performance corporate website with custom WordPress theme integration, advanced CMS features and improved loading speed."
+            "REST API"
+        ]
     },
 
 
     {
-        "title":
-        "WooCommerce E-Commerce Platform",
-
-        "category":
-        "WooCommerce",
-
-        "image":
-        "assets/images/portfolio/ecommerce.jpg",
-
-        "technology":
-        [
+        "title": "WooCommerce Fashion Store",
+        "category": "WooCommerce",
+        "description": "A customized WooCommerce eCommerce platform with optimized checkout flow, payment integration and enhanced shopping experience.",
+        "image": "assets/images/portfolio/woocommerce-store.jpg",
+        "url": "#",
+        "tags": [
             "WooCommerce",
-            "PHP",
-            "Payment API",
-            "JavaScript"
-        ],
-
-        "achievement":
-        "Created a scalable online shopping platform with custom checkout workflow, product management and payment gateway integration."
-    },
-
-
-    {
-        "title":
-        "Laravel Business Automation System",
-
-        "category":
-        "PHP Application",
-
-        "image":
-        "assets/images/portfolio/laravel-app.jpg",
-
-        "technology":
-        [
-            "Laravel",
-            "PHP",
-            "REST API",
-            "Database"
-        ],
-
-        "achievement":
-        "Built a custom enterprise application that automated internal processes and reduced manual business operations."
-    },
-
-
-    {
-        "title":
-        "Many More Websites Developed",
-
-        "category":
-        "150+ Projects",
-
-        "image":
-        "assets/images/portfolio/more-projects.jpg",
-
-        "technology":
-        [
             "WordPress",
-            "PHP",
-            "Laravel",
-            "Modern Web"
-        ],
+            "Payment Gateway",
+            "SEO"
+        ]
+    },
 
-        "achievement":
-        "Explore many more websites, custom portals and business solutions developed using modern web technologies."
+
+    {
+        "title": "Custom WordPress Business Website",
+        "category": "WordPress",
+        "description": "A modern corporate WordPress website with custom theme development, performance optimization and responsive design.",
+        "image": "assets/images/portfolio/wordpress-business.jpg",
+        "url": "#",
+        "tags": [
+            "WordPress",
+            "Custom Theme",
+            "PHP",
+            "CMS"
+        ]
+    },
+
+
+    {
+        "title": "PHP CRM Application",
+        "category": "PHP",
+        "description": "A custom customer relationship management system built with PHP and MySQL for managing leads, users and business operations.",
+        "image": "assets/images/portfolio/php-crm.jpg",
+        "url": "#",
+        "tags": [
+            "PHP",
+            "MySQL",
+            "JavaScript",
+            "Backend"
+        ]
+    },
+
+
+    {
+        "title": "Laravel REST API Platform",
+        "category": "Laravel",
+        "description": "A secure API-driven application architecture supporting authentication, third-party integrations and scalable services.",
+        "image": "assets/images/portfolio/laravel-api.jpg",
+        "url": "#",
+        "tags": [
+            "Laravel",
+            "API",
+            "Authentication",
+            "JSON"
+        ]
+    },
+
+
+    {
+        "title": "WooCommerce Custom Marketplace",
+        "category": "WooCommerce",
+        "description": "A marketplace solution with custom product features, vendor workflows and optimized performance.",
+        "image": "assets/images/portfolio/woocommerce-marketplace.jpg",
+        "url": "#",
+        "tags": [
+            "WooCommerce",
+            "WordPress",
+            "Marketplace",
+            "eCommerce"
+        ]
     }
 ]

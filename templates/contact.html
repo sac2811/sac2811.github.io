@@ -1,47 +1,37 @@
-<!-- =====================================================
-     DEVCRAFT PREMIUM PORTFOLIO
-     Contact Section
-     ===================================================== -->
-
-
 <section
-    class="section"
-    id="contact">
+    id="contact"
+    class="contact section">
 
 
     <div class="container">
 
 
-
-        <!-- Section Heading -->
-
-
-        <div class="section-heading fade-up">
+        <!-- Section Header -->
 
 
-            <div class="eyebrow">
-
-                CONTACT
-
-            </div>
+        <div class="section-heading text-center reveal">
 
 
+            <span class="badge">
 
-            <h2 class="section-title">
+                Contact
 
-                Let's Build Something Great Together
+            </span>
+
+
+
+            <h2>
+
+                Let's Build Something Amazing Together
 
             </h2>
 
 
 
-            <p class="section-description">
+            <p class="section-subtitle">
 
-
-                Have a website idea, WordPress project
-                or custom application requirement?
-                Let's discuss how I can help.
-
+                Have a project idea? Let's discuss how I can
+                help you build a powerful digital solution.
 
             </p>
 
@@ -52,13 +42,7 @@
 
 
 
-
-
-
-
-        <div class="contact-grid">
-
-
+        <div class="contact-container">
 
 
 
@@ -67,43 +51,144 @@
             <!-- Contact Information -->
 
 
-            <div class="contact-info">
+            <div class="contact-info reveal-left">
+
+
+                <h3>
+
+                    Get In Touch
+
+                </h3>
+
+
+
+                <p>
+
+                    Available for freelance projects,
+                    collaborations and long-term development
+                    partnerships.
+
+                </p>
 
 
 
 
 
-                <div class="contact-card glass-card fade-left">
+                <div class="contact-list">
 
 
-                    <div class="contact-icon">
 
-                        <i class="fas fa-code"></i>
+                    <div class="contact-item">
+
+
+                        <div class="contact-icon">
+
+                            ✉️
+
+                        </div>
+
+
+
+                        <div>
+
+
+                            <strong>
+
+                                Email
+
+                            </strong>
+
+
+                            <p>
+
+                                hello@example.com
+
+                            </p>
+
+
+                        </div>
+
 
                     </div>
 
 
 
-                    <div>
 
 
-                        <h3>
-
-                            Development Services
-
-                        </h3>
 
 
-                        <p>
+                    <div class="contact-item">
 
-                            PHP Development,
-                            WordPress, WooCommerce,
-                            Laravel and API solutions.
 
-                        </p>
+                        <div class="contact-icon">
+
+                            📱
+
+                        </div>
+
+
+
+                        <div>
+
+
+                            <strong>
+
+                                Phone
+
+                            </strong>
+
+
+                            <p>
+
+                                +91 XXXXX XXXXX
+
+                            </p>
+
+
+                        </div>
 
 
                     </div>
+
+
+
+
+
+
+
+                    <div class="contact-item">
+
+
+                        <div class="contact-icon">
+
+                            📍
+
+                        </div>
+
+
+
+                        <div>
+
+
+                            <strong>
+
+                                Location
+
+                            </strong>
+
+
+                            <p>
+
+                                India
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
 
 
                 </div>
@@ -112,90 +197,46 @@
 
 
 
+                <!-- Social Links -->
+
+
+                <div class="social-links">
+
+
+                    <a
+                        href="#"
+                        class="social-link"
+                        aria-label="LinkedIn">
+
+                        in
+
+                    </a>
 
 
 
+                    <a
+                        href="#"
+                        class="social-link"
+                        aria-label="GitHub">
 
-                <div class="contact-card glass-card fade-left">
+                        git
 
-
-                    <div class="contact-icon">
-
-                        <i class="fas fa-clock"></i>
-
-                    </div>
-
+                    </a>
 
 
-                    <div>
 
+                    <a
+                        href="#"
+                        class="social-link"
+                        aria-label="Twitter">
 
-                        <h3>
+                        X
 
-                            Project Availability
+                    </a>
 
-                        </h3>
-
-
-                        <p>
-
-                            Available for freelance
-                            projects, collaborations
-                            and long-term partnerships.
-
-                        </p>
-
-
-                    </div>
 
 
                 </div>
-
-
-
-
-
-
-
-
-
-                <div class="contact-card glass-card fade-left">
-
-
-                    <div class="contact-icon">
-
-                        <i class="fas fa-globe"></i>
-
-                    </div>
-
-
-
-                    <div>
-
-
-                        <h3>
-
-                            Remote Collaboration
-
-                        </h3>
-
-
-                        <p>
-
-                            Working with businesses
-                            globally through remote
-                            development solutions.
-
-                        </p>
-
-
-                    </div>
-
-
-                </div>
-
-
-
 
 
 
@@ -212,34 +253,32 @@
             <!-- Contact Form -->
 
 
-            <div class="contact-container glass-card fade-right">
+            <div class="contact-form card reveal-right">
 
 
-                <form id="contact-form">
-
-
-
+                <form
+                    id="contactForm"
+                    novalidate>
 
 
                     <div class="form-group">
 
 
-                        <label 
-                        class="form-label">
+                        <label for="name">
 
-
-                            Your Name
-
+                            Name
 
                         </label>
 
 
 
                         <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Enter your name"
-                        required>
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control"
+                            placeholder="Your name"
+                            required>
 
 
                     </div>
@@ -250,27 +289,24 @@
 
 
 
-
-
                     <div class="form-group">
 
 
-                        <label 
-                        class="form-label">
+                        <label for="email">
 
-
-                            Email Address
-
+                            Email
 
                         </label>
 
 
 
                         <input
-                        type="email"
-                        class="form-control"
-                        placeholder="Enter your email"
-                        required>
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Your email address"
+                            required>
 
 
                     </div>
@@ -281,26 +317,50 @@
 
 
 
+                    <div class="form-group">
+
+
+                        <label for="subject">
+
+                            Subject
+
+                        </label>
+
+
+
+                        <input
+                            type="text"
+                            id="subject"
+                            name="subject"
+                            class="form-control"
+                            placeholder="Project subject">
+
+
+                    </div>
+
+
+
+
+
 
 
                     <div class="form-group">
 
 
-                        <label 
-                        class="form-label">
+                        <label for="message">
 
-
-                            Project Details
-
+                            Message
 
                         </label>
 
 
 
                         <textarea
-                        class="form-control"
-                        placeholder="Tell me about your project..."
-                        required></textarea>
+                            id="message"
+                            name="message"
+                            class="form-control"
+                            placeholder="Tell me about your project"
+                            required></textarea>
 
 
                     </div>
@@ -308,17 +368,15 @@
 
 
 
-					<div class="form-message"></div>
-
 
 
 
                     <button
-                    type="submit"
-                    class="btn btn-primary btn-submit">
+                        type="submit"
+                        class="btn btn-primary">
 
 
-                        Start Your Project
+                        Send Message
 
 
                     </button>
@@ -327,8 +385,10 @@
 
 
 
-                </form>
+                    <div class="form-message"></div>
 
+
+                </form>
 
 
             </div>
@@ -336,10 +396,7 @@
 
 
 
-
         </div>
-
-
 
 
     </div>
